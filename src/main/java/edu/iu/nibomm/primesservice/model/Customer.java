@@ -1,8 +1,17 @@
 package edu.iu.nibomm.primesservice.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Table
+@Entity
 public class Customer {
+    @Id
     private String username;
     private String password;
+    public Customer() {
+    }
 
     public Customer(String username , String password) {
         this.username = username;
