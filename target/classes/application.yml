@@ -12,3 +12,7 @@ spring:
       mode: always
   server:
     port: 8085
+
+  rabbitmq:
+    host: localhost
+    port: 4006
