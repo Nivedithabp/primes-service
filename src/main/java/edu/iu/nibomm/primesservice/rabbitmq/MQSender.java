@@ -1,9 +1,11 @@
 package edu.iu.nibomm.primesservice.rabbitmq;
 
+import com.nimbusds.jose.shaded.gson.Gson;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.amqp.core.Queue;
+import edu.iu.nibomm.primesservice.model.PrimesRecord;
 
 import java.text.MessageFormat;
 
@@ -18,8 +20,12 @@ public class MQSender {
         this.rabbitTemplate = re;
     }
 
-    public void sendMessage(int n , boolean isPrime){
-        String message = MessageFormat.format("n : {0} , isprime :{1}" , n , isPrime);
-        rabbitTemplate.convertAndSend("primes",message);
+    public void sendMessage(String customer ,int n , boolean isPrime){
+
+        PrimesRecord message = new PrimesRecord(customer, n, isPrime);
+        Gson gson = new Gson();
+        String jsonMessage = gson.toJson(message);
+
+        rabbitTemplate.convertAndSend("primes", jsonMessage);
     }
 }
